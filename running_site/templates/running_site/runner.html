@@ -1,0 +1,34 @@
+{% extends "running_site/base.html" %}
+
+{% block content %}
+    <p>{{ runner }}</p>
+    
+    <p>Performances</p>
+    <table>
+        <tr>
+            <th>
+                Distance
+            </th>
+            <th>
+                Time
+            </th>
+        </tr>
+        
+        {% for performance in performances %}
+            <tr>
+                <td>
+                    {{ performance.number_distance }} {{ performance.units}}
+                </td>
+                <td>
+                    {{ performance.hours }}:{{ performance.minutes }}:{{ performance.seconds }}
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td>
+                    No performances have been recorded yet.    
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock content %}

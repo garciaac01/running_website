@@ -1,0 +1,14 @@
+{% extends "running_site/base.html" %}
+
+{% block content %}
+    <p>Runners</p>
+    <ul>
+        {% for runner in runners %}
+            <li>
+                <a href="{% url 'running_site:runner' runner.id %}">{{ runner }}</a>
+            </li>
+        {% empty %}
+            <li>No runners have been added yet.</li>
+        {% endfor %}
+    </ul>
+{% endblock content %}
