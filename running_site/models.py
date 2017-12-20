@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 class Runner(models.Model):
@@ -40,10 +41,13 @@ class Performance(models.Model):
         ('mi', 'mi')
     )
     units = models.CharField(choices=UNIT_CHOICES, default='km', max_length=255)
-    hours = models.IntegerField()
+    hours = models.IntegerField(null=True, blank=True)
     minutes = models.IntegerField()
-    seconds = models.DecimalField(decimal_places=2, max_digits=2)
+    seconds = models.DecimalField(decimal_places=2, max_digits=4, validators=[MaxValueValidator(60.0), MinValueValidator(00)])
 
     def __unicode__(self):
         """Return a string representation of the performance."""
-        return str(self.hours) + ":" + str(self.minutes) + ":" + str(self.seconds)
+        if self.hours:
+            return str(self.hours) + ":" + str(self.minutes) + ":" + str(self.seconds)
+        else:
+            return str(self.minutes) + ":" + str(self.seconds)
